@@ -1,0 +1,2 @@
+FROM redash/redash:latest
+CMD /usr/local/bin/gunicorn -b 0.0.0.0:$PORT --name redash -w${REDASH_WEB_WORKERS:-2} redash.wsgi:app
