@@ -15,6 +15,7 @@ heroku container:push --recursive
 
 - postgres
 - redis
+- sendgrid
 
 を追加する
 
@@ -29,6 +30,12 @@ REDASH_COOKIE_SECRET: YOUR_SECRET_TOKEN
 REDASH_DATABASE_URL:  PostgresのURL
 REDASH_LOG_LEVEL:     INFO
 REDASH_REDIS_URL:     redisのURL
+REDASH_MAIL_PASSWORD:      sendgridのパスワード
+REDASH_MAIL_PORT:          587
+REDASH_MAIL_SERVER:        smtp.sendgrid.net
+REDASH_MAIL_USERNAME:      sendgridのユーザ
+REDASH_MAIL_USE_TLS:       true
+
 ```
 
 ### 初回のデプロイ時に必要なセットアップ
