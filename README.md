@@ -1,46 +1,50 @@
-# Redash
+# Redash on Heroku
 
-redashアプリをdocker on herokuで動かすためのファイル群
+Dockerfiles for hosting redash on heroku
 
-## デプロイ方法
+## How to deploy
 
 ```sh
+git clone git@github.com:willnet/redash-on-heroku.git
+cd redash-on-heroku
+heroku create your_app_name
 heroku container:push --recursive
 ```
 
+## How to setup
 
-## セットアップ
+### Add Addons
 
-### アドオン
+Add following addons on heroku dashboard.
 
-- postgres
-- redis
-- sendgrid
+- heroku postgres
+- Redis Cloud(or something)
+- sendgrid (or something)
 
-を追加する
+Choose redis addon allow more than or equal 30 connections. Otherwise you will get connection errors frequently.
 
-### 環境変数
+### Add environment variables
 
-環境変数を `heroku config:set` コマンドを利用して設定していく
-
-```
-PYTHONUNBUFFERED:     0
-QUEUES:               queries,scheduled_queries,celery
-REDASH_COOKIE_SECRET: YOUR_SECRET_TOKEN
-REDASH_DATABASE_URL:  PostgresのURL
-REDASH_LOG_LEVEL:     INFO
-REDASH_REDIS_URL:     redisのURL
-REDASH_MAIL_PASSWORD:      sendgridのパスワード
-REDASH_MAIL_PORT:          587
-REDASH_MAIL_SERVER:        smtp.sendgrid.net
-REDASH_MAIL_USERNAME:      sendgridのユーザ
-REDASH_MAIL_USE_TLS:       true
+Add environment variables like following.
 
 ```
+heroku config:set PYTHONUNBUFFERED=0
+heroku config:set QUEUES=queries,scheduled_queries,celery
+heroku config:set REDASH_COOKIE_SECRET=YOUR_SECRET_TOKEN
+heroku config:set REDASH_DATABASE_URL=YOUR_POSTGRES_URL
+heroku config:set REDASH_LOG_LEVEL=INFO
+heroku config:set REDASH_REDIS_URL=YOUR_REDIS_URL
+heroku config:set REDASH_MAIL_PASSWORD=YOUR_ADDON_PASSWORD
+heroku config:set REDASH_MAIL_PORT=587
+heroku config:set REDASH_MAIL_SERVER=YOUR_ADDON_DOMAIN
+heroku config:set REDASH_MAIL_USERNAME=YOUR_ADDON_USERNAME
+heroku config:set REDASH_MAIL_USE_TLS=true
+heroku config:set REDASH_MAIL_DEFAULT_SENDER=YOUR_MAIL_ADDRESS
+```
 
-### 初回のデプロイ時に必要なセットアップ
+### Create database
 
-dbを作る必要がある。デプロイ語に次のコマンドでいけるはず(未確認)
+After deploy and add postgres addon, create database like following.
 
 ```sh
 heroku run /app/manage.py database create_tables
