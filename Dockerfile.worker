@@ -1,4 +1,4 @@
-FROM willnet/redash:latest
+FROM redash/redash:latest
 
 ENV WORKERS_COUNT=${WORKERS_COUNT:-1}
 ENV QUEUES=${QUEUES:-celery}
