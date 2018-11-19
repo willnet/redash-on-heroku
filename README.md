@@ -27,19 +27,28 @@ Choose redis addon allow more than or equal 30 connections. Otherwise you will g
 
 Add environment variables like following.
 
-```
+```sh
 heroku config:set PYTHONUNBUFFERED=0
 heroku config:set QUEUES=queries,scheduled_queries,celery
 heroku config:set REDASH_COOKIE_SECRET=YOUR_SECRET_TOKEN
 heroku config:set REDASH_DATABASE_URL=YOUR_POSTGRES_URL
 heroku config:set REDASH_LOG_LEVEL=INFO
 heroku config:set REDASH_REDIS_URL=YOUR_REDIS_URL
+heroku config:set REDASH_HOST=YOUR_DOMAIN_URL
 heroku config:set REDASH_MAIL_PASSWORD=YOUR_ADDON_PASSWORD
 heroku config:set REDASH_MAIL_PORT=587
 heroku config:set REDASH_MAIL_SERVER=YOUR_ADDON_DOMAIN
 heroku config:set REDASH_MAIL_USERNAME=YOUR_ADDON_USERNAME
 heroku config:set REDASH_MAIL_USE_TLS=true
 heroku config:set REDASH_MAIL_DEFAULT_SENDER=YOUR_MAIL_ADDRESS
+```
+
+See also https://redash.io/help/open-source/setup#-setup
+
+### Release container
+
+```sh
+heroku container:release web worker
 ```
 
 ### Create database
@@ -49,3 +58,21 @@ After deploy and add postgres addon, create database like following.
 ```sh
 heroku run /app/manage.py database create_tables
 ```
+
+### Enable worker dyno
+
+```sh
+heroku ps:scale worker=1
+```
+
+## How to upgrade
+
+```sh
+heroku ps:scale web=0 worker=0
+heroku container:push --recursive
+heroku container:release web worker
+heroku run /app/manage.py db upgrade
+heroku ps:scale web=1 worker=1
+```
+
+See also https://redash.io/help/open-source/admin-guide/how-to-upgrade
