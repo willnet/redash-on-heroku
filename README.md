@@ -2,13 +2,12 @@
 
 Dockerfiles for hosting redash on heroku
 
-## How to deploy
+## How to create
 
 ```sh
 git clone git@github.com:willnet/redash-on-heroku.git
 cd redash-on-heroku
-heroku create your_app_name
-heroku container:push --recursive
+heroku create --stack=container your_app_name
 ```
 
 ## How to setup
@@ -48,7 +47,7 @@ See also https://redash.io/help/open-source/setup#-setup
 ### Release container
 
 ```sh
-heroku container:release web worker
+git push heroku master
 ```
 
 ### Create database
@@ -69,8 +68,7 @@ heroku ps:scale worker=1
 
 ```sh
 heroku ps:scale web=0 worker=0
-heroku container:push --recursive
-heroku container:release web worker
+git push heroku master
 heroku run /app/manage.py db upgrade
 heroku ps:scale web=1 worker=1
 ```
