@@ -1,3 +1,3 @@
-FROM redash/redash:6.0.0.b8537
+FROM redash/redash:7.0.0.b18042
 WORKDIR /app
 CMD /usr/local/bin/gunicorn -b 0.0.0.0:$PORT --name redash -w${REDASH_WEB_WORKERS:-1} redash.wsgi:app
