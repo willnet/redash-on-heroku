@@ -30,6 +30,7 @@ Add environment variables like following.
 heroku config:set PYTHONUNBUFFERED=0
 heroku config:set QUEUES=queries,scheduled_queries,celery
 heroku config:set REDASH_COOKIE_SECRET=YOUR_SECRET_TOKEN
+heroku config:set REDASH_SECRET_KEY=YOUR_SECRET_KEY
 heroku config:set REDASH_DATABASE_URL=YOUR_POSTGRES_URL
 heroku config:set REDASH_LOG_LEVEL=INFO
 heroku config:set REDASH_REDIS_URL=YOUR_REDIS_URL
