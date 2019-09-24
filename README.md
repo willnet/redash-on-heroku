@@ -41,6 +41,7 @@ heroku config:set REDASH_MAIL_SERVER=YOUR_ADDON_DOMAIN
 heroku config:set REDASH_MAIL_USERNAME=YOUR_ADDON_USERNAME
 heroku config:set REDASH_MAIL_USE_TLS=true
 heroku config:set REDASH_MAIL_DEFAULT_SENDER=YOUR_MAIL_ADDRESS
+heroku config:set REDASH_ENFORCE_HTTPS=true
 ```
 
 See also https://redash.io/help/open-source/setup#-setup
