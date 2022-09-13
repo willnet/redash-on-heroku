@@ -1,4 +1,4 @@
-FROM redash/redash:latest
+FROM redash/redash:10.1.0.b50633
 
 ENV WORKERS_COUNT=${WORKERS_COUNT:-1}
 ENV QUEUES=${QUEUES:-celery}
